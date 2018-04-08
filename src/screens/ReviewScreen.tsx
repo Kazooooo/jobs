@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button } from "react-native";
+
 import { NavigationScreenConfig } from "react-navigation";
-import { Button } from "react-native-elements";
 
 class ReviewScreen extends React.Component<{}, {}> {
   static readonly navigationOptions: NavigationScreenConfig<{}> = ({ navigation }) => ({
