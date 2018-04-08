@@ -1,5 +1,6 @@
 import React from "react";
 import Slides from "../components/Slides";
+import { NavigationScreenProps } from "react-navigation";
 
 export interface SlideData {
   text: string;
@@ -21,9 +22,15 @@ const SLIDE_DATA_LIST: SlideData[] = [
   },
 ];
 
-class WelcomeScreen extends React.Component<{}, {}> {
+interface WelcomeScreenProps extends NavigationScreenProps {}
+
+class WelcomeScreen extends React.Component<WelcomeScreenProps, {}> {
+  private handleComplete = () => {
+    this.props.navigation.navigate("auth");
+  }
+
   render() {
-    return <Slides dataList={SLIDE_DATA_LIST} />;
+    return <Slides dataList={SLIDE_DATA_LIST} onComplete={this.handleComplete} />;
   }
 }
 

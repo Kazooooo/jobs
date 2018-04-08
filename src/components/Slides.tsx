@@ -5,14 +5,21 @@ import SingleSlide from "./SingleSlide";
 
 interface SlidesProps {
   dataList: SlideData[];
+  onComplete: () => void;
 }
 
 class Slides extends React.Component<SlidesProps, {}> {
   render() {
+    const { dataList, onComplete } = this.props;
     return (
       <ScrollView horizontal={true} style={{ flex: 1 }} pagingEnabled={true}>
-        {this.props.dataList.map((slideData) => (
-          <SingleSlide key={slideData.text} slide={slideData} />
+        {dataList.map((slideData, index) => (
+          <SingleSlide
+            key={slideData.text}
+            slide={slideData}
+            isLastSlide={dataList.length - 1 === index}
+            onComplete={onComplete}
+          />
         ))}
       </ScrollView>
     );
