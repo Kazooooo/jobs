@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
+import { Constants } from "expo";
 import { TabNavigator, StackNavigator } from "react-navigation";
 
 import AuthScreen from "./screens/AuthScreen";
@@ -39,6 +40,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
     backgroundColor: "#fff",
     justifyContent: "center",
   },
