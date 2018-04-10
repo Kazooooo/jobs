@@ -1,7 +1,23 @@
 import React from "react";
+import { connect } from "react-redux";
 import { View, Text } from "react-native";
+import authActionCreator from "../actions/auth";
+import { AppState } from "../reducers";
+import { Dispatch } from "redux";
 
-class AuthScreen extends React.Component<{}, {}> {
+interface AuthScreenProps {
+  loginFacebook: () => (
+    dispatch: Dispatch<AppState>,
+    getState: () => AppState,
+    extraArgument: any,
+  ) => void;
+}
+
+class AuthScreen extends React.Component<AuthScreenProps, {}> {
+  componentDidMount() {
+    this.props.loginFacebook();
+  }
+
   render() {
     return (
       <View>
@@ -16,4 +32,6 @@ class AuthScreen extends React.Component<{}, {}> {
   }
 }
 
-export default AuthScreen;
+export default connect(null, {
+  loginFacebook: authActionCreator.loginFacebookActionCreator,
+})(AuthScreen);
