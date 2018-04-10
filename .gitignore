@@ -65,3 +65,6 @@ typings/
 
 # editor
 .vscode/
+
+# app
+src/constants/secure
