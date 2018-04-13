@@ -1,16 +1,13 @@
 import { combineReducers } from "redux";
-import { Reducer } from "redux";
+import { AuthState } from "./authReducer";
+import authReducer from "./authReducer";
 
 export interface AppState {
-  auth: {};
+  auth: AuthState;
 }
 
-type ReducesMap<S extends {}> = { [K in keyof S]: Reducer<S[K]> };
-
-const reducerMap: ReducesMap<AppState> = {
-  auth: () => {
-    return {};
-  },
+const reducerMap = {
+  auth: authReducer,
 };
 
 export default combineReducers<AppState>(reducerMap);
