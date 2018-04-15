@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
-import { View, Text } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import authActionCreator from "../actions/auth";
 import { AppState } from "../reducers";
 
@@ -37,21 +37,23 @@ class AuthScreen extends React.Component<AuthScreenProps, AuthScreenState> {
 
   handleAuthComplete = () => {
     this.props.navigation.navigate("map");
-  };
+  }
 
   render() {
     return (
-      <View>
-        <Text>AuthScreen</Text>
-        <Text>AuthScreen</Text>
-        <Text>AuthScreen</Text>
-        <Text>AuthScreen</Text>
-        <Text>AuthScreen</Text>
-        <Text>AuthScreen</Text>
+      <View style={styles.container}>
+        <ActivityIndicator />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+});
 
 export default connect(
   (state: AppState) => ({
