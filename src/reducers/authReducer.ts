@@ -14,6 +14,15 @@ const initialState: Partial<AuthStateData> = {
 };
 
 const reducer = reducerWithInitialState(initialState)
+  .case(authActionCreators.getStorageTokenStart, (state) => state)
+  .case(authActionCreators.getStorageTokenSuccess, (state, token) => ({
+    ...state,
+    token: token.result.token,
+  }))
+  .case(authActionCreators.getStorageTokenFailed, (state) => ({
+    ...state,
+    token: undefined,
+  }))
   .case(authActionCreators.loginStart, (state) => state)
   .case(authActionCreators.loginSuccess, (state, token) => ({
     ...state,

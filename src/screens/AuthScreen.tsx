@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { NavigationScreenProps } from "react-navigation";
 import { StyleSheet, View, ActivityIndicator } from "react-native";
-import authActionCreator from "../actions/auth";
+import authActionCreators from "../actions/auth";
 import { AppState } from "../reducers";
 
 interface AuthScreenProps extends NavigationScreenProps {
@@ -60,6 +60,6 @@ export default connect(
     token: state.auth.token,
   }),
   {
-    loginFacebook: authActionCreator.loginFacebookActionCreator,
+    loginFacebook: authActionCreators.loginFacebookActionCreator,
   },
 )(AuthScreen);

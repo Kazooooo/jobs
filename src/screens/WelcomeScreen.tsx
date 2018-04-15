@@ -1,6 +1,10 @@
 import React from "react";
 import Slides from "../components/Slides";
 import { NavigationScreenProps } from "react-navigation";
+import { connect } from "react-redux";
+import { AppState } from "../reducers";
+import authActionCreators from "../actions/auth";
+import { AppLoading } from "expo";
 
 export interface SlideData {
   text: string;
@@ -22,16 +26,57 @@ const SLIDE_DATA_LIST: SlideData[] = [
   },
 ];
 
-interface WelcomeScreenProps extends NavigationScreenProps {}
+interface WelcomeScreenProps extends NavigationScreenProps {
+  token: string;
+  getTokenFromStorage: () => () => void;
+}
 
-class WelcomeScreen extends React.Component<WelcomeScreenProps, {}> {
+interface WelcomeScreenState {
+  hasToken: boolean | undefined;
+}
+
+class WelcomeScreen extends React.Component<WelcomeScreenProps, WelcomeScreenState> {
+  readonly state: WelcomeScreenState = {
+    hasToken: undefined,
+  };
+
+  static getDerivedStateFromProps(nextProps: WelcomeScreenProps) {
+    return {
+      hasToken: !!nextProps.token,
+    };
+  }
+
+  componentDidMount() {
+    this.props.getTokenFromStorage();
+  }
+
+  shouldComponentUpdate(nextProps: WelcomeScreenProps, nextState: WelcomeScreenState) {
+    return !!nextState.hasToken;
+  }
+
+  componentDidUpdate() {
+    if (this.state.hasToken) {
+      this.props.navigation.navigate("map");
+    }
+  }
+
   private handleComplete = () => {
     this.props.navigation.navigate("auth");
   }
 
   render() {
+    if (this.state.hasToken === undefined) {
+      return <AppLoading />;
+    }
     return <Slides dataList={SLIDE_DATA_LIST} onComplete={this.handleComplete} />;
   }
 }
 
-export default WelcomeScreen;
+export default connect(
+  (state: AppState) => ({
+    token: state.auth.token,
+  }),
+  {
+    getTokenFromStorage: authActionCreators.getStorageTokenActionCreator,
+  },
+)(WelcomeScreen);
