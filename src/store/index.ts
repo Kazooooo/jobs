@@ -1,7 +1,8 @@
-import { createStore, compose, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import axios from "axios";
 import reducers from "../reducers";
 
-const store = createStore(reducers, { auth: {} }, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, applyMiddleware(thunk.withExtraArgument(axios)));
 
 export default store;
