@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { MapView } from "expo";
 
-interface RegionData {
+export interface RegionData {
   longitude: number;
   latitude: number;
   longitudeDelta: number;
@@ -23,10 +23,18 @@ class MapScreen extends React.Component<{}, MapScreenState> {
     },
   };
 
+  handleRegionChangeComplete = (region: RegionData) => {
+    this.setState({ region });
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <MapView style={{ flex: 1 }} region={this.state.region} />
+        <MapView
+          style={{ flex: 1 }}
+          region={this.state.region}
+          onRegionChangeComplete={this.handleRegionChangeComplete}
+        />
       </View>
     );
   }
