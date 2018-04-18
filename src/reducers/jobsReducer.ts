@@ -2,26 +2,26 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import jobActionCreators from "../actions/job";
 
 export interface JobsStateData {
-  data: any;
+  jobList: any[];
 }
 
 export interface JobsState {
-  data: any;
+  jobList: any[];
 }
 
 const initialState: Partial<JobsStateData> = {
-  data: undefined,
+  jobList: [],
 };
 
 const reducer = reducerWithInitialState(initialState)
   .case(jobActionCreators.fetchStart, (state) => state)
-  .case(jobActionCreators.fetchSuccess, (state, data) => ({
+  .case(jobActionCreators.fetchSuccess, (state, payload) => ({
     ...state,
-    data,
+    jobList: payload.result.jobList,
   }))
   .case(jobActionCreators.fetchFailed, (state) => ({
     ...state,
-    data: undefined,
+    jobList: [],
   }));
 
 export default reducer;

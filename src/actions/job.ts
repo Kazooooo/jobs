@@ -42,10 +42,11 @@ const fetchJobsActionCreator = (
     dispatch(
       standardActionCreators.fetchSuccess({
         params: {},
-        result: { data },
+        result: {
+          jobList: data.results,
+        },
       }),
     );
-    console.log(data);
   } catch (error) {
     console.log(error);
   }

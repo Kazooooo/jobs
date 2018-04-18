@@ -15,6 +15,7 @@ export interface RegionData {
 
 interface MapScreenProps {
   fetchJobs: (region: RegionData) => () => void;
+  jobList: any[];
 }
 
 interface MapScreenState {
@@ -70,6 +71,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect((state: AppState) => ({}), {
+export default connect((state: AppState) => ({
+  jobList: state.jobs.jobList,
+}), {
   fetchJobs: jobActionCreators.fetchJobsActionCreator,
 })(MapScreen);
