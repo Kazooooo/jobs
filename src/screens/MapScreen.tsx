@@ -1,6 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { MapView } from "expo";
+import { Button } from "react-native-elements";
+import { connect } from "react-redux";
+import { AppState } from "../reducers";
+import jobActionCreators from "../actions/job";
 
 export interface RegionData {
   longitude: number;
@@ -9,11 +13,15 @@ export interface RegionData {
   latitudeDelta: number;
 }
 
+interface MapScreenProps {
+  fetchJobs: (region: RegionData) => () => void;
+}
+
 interface MapScreenState {
   region: RegionData;
 }
 
-class MapScreen extends React.Component<{}, MapScreenState> {
+class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
   readonly state: MapScreenState = {
     region: {
       longitude: -122,
@@ -23,8 +31,12 @@ class MapScreen extends React.Component<{}, MapScreenState> {
     },
   };
 
-  handleRegionChangeComplete = (region: RegionData) => {
+  private handleRegionChangeComplete = (region: RegionData) => {
     this.setState({ region });
+  }
+
+  private handleButtonPress = () => {
+    this.props.fetchJobs(this.state.region);
   }
 
   render() {
@@ -35,9 +47,29 @@ class MapScreen extends React.Component<{}, MapScreenState> {
           region={this.state.region}
           onRegionChangeComplete={this.handleRegionChangeComplete}
         />
+        <View style={styles.buttonContainer}>
+          <Button
+            large={true}
+            title="Search This Area"
+            backgroundColor="#009688"
+            icon={{ name: "search" }}
+            onPress={this.handleButtonPress}
+          />
+        </View>
       </View>
     );
   }
 }
 
-export default MapScreen;
+const styles = StyleSheet.create({
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    left: 0,
+    right: 0,
+  },
+});
+
+export default connect((state: AppState) => ({}), {
+  fetchJobs: jobActionCreators.fetchJobsActionCreator,
+})(MapScreen);
