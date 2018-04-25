@@ -5,6 +5,8 @@ import { Button } from "react-native-elements";
 import { connect } from "react-redux";
 import { AppState } from "../reducers";
 import jobActionCreators from "../actions/job";
+import { NavigationScreenProps } from "react-navigation";
+import isEqual from "lodash/isEqual";
 
 export interface RegionData {
   longitude: number;
@@ -13,7 +15,7 @@ export interface RegionData {
   latitudeDelta: number;
 }
 
-interface MapScreenProps {
+interface MapScreenProps extends NavigationScreenProps {
   fetchJobs: (region: RegionData) => () => void;
   jobList: any[];
 }
@@ -31,6 +33,12 @@ class MapScreen extends React.Component<MapScreenProps, MapScreenState> {
       latitudeDelta: 0.09,
     },
   };
+
+  componentDidUpdate(prevProps: MapScreenProps) {
+    if (!isEqual(prevProps.jobList, this.props.jobList)) {
+      this.props.navigation.navigate("deck");
+    }
+  }
 
   private handleRegionChangeComplete = (region: RegionData) => {
     this.setState({ region });
@@ -71,8 +79,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect((state: AppState) => ({
-  jobList: state.jobs.jobList,
-}), {
-  fetchJobs: jobActionCreators.fetchJobsActionCreator,
-})(MapScreen);
+export default connect(
+  (state: AppState) => ({
+    jobList: state.jobs.jobList,
+  }),
+  {
+    fetchJobs: jobActionCreators.fetchJobsActionCreator,
+  },
+)(MapScreen);
