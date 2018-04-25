@@ -18,7 +18,7 @@ class SwipeCard extends React.Component<SwipeCardProps, {}> {
     };
 
     return (
-      <Card title={cardData.jobtitle}>
+      <Card title={cardData.jobtitle} containerStyle={styles.cardContainer}>
         <View style={{ height: 300 }}>
           <MapView
             scrollEnabled={false}
@@ -44,6 +44,9 @@ class SwipeCard extends React.Component<SwipeCardProps, {}> {
 }
 
 const styles = StyleSheet.create({
+  cardContainer: {
+    height: 600,
+  },
   detailWrapper: {
     flexDirection: "row",
     justifyContent: "space-around",

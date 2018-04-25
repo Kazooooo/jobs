@@ -125,7 +125,7 @@ class Swipe extends React.Component<SwipeProps, SwipeState> {
             return (
               <Animated.View
                 key={cardData.jobkey}
-                style={[styles.cardStyle, { top: 10 * (index - cardIndex) }]}
+                style={[styles.cardStyle, { top: 10 * (index - cardIndex), zIndex: -index }]}
               >
                 <SwipeCard cardData={cardData} />
               </Animated.View>

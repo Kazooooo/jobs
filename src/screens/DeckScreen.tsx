@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import { AppState } from "../reducers";
 import { connect } from "react-redux";
 import Swipe from "../components/Swipe";
@@ -11,11 +11,11 @@ interface DeckScreenProps {
 class DeckScreen extends React.Component<DeckScreenProps, {}> {
   render() {
     return (
-      <View>
+      <SafeAreaView>
         <Swipe
           cardDataList={this.props.jobList}
         />
-      </View>
+      </SafeAreaView>
     );
   }
 }
