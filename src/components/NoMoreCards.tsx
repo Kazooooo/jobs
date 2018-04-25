@@ -6,7 +6,7 @@ export interface NoMoreCardsProps {}
 
 const NoMoreCards: React.SFC<NoMoreCardsProps> = () => {
   return (
-    <Card title="All Done">
+    <Card title="No more jobs">
       <Text style={{ marginBottom: 10 }}>There's no more content here!</Text>
       <Button
         backgroundColor="#03A9F4"
