@@ -20,6 +20,7 @@ enum SWIPE_DIRECTION {
 }
 interface SwipeProps {
   cardDataList: any[];
+  onSwipeRight: (job: any) => void;
 }
 
 interface SwipeState {
@@ -66,6 +67,9 @@ class Swipe extends React.Component<SwipeProps, SwipeState> {
   }
 
   forceSwipe = (direction: SWIPE_DIRECTION) => {
+    if (direction === SWIPE_DIRECTION.RIGHT) {
+      this.props.onSwipeRight(this.props.cardDataList[this.state.cardIndex]);
+    }
     const x = direction === SWIPE_DIRECTION.RIGHT ? SCREEN_WIDTH : -SCREEN_WIDTH;
     Animated.timing(this.state.position, {
       toValue: { x, y: 0 },
