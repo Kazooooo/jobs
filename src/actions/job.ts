@@ -9,11 +9,13 @@ import qs from "qs";
 
 const actionCreator = actionCreatorFactory("JOBS");
 const fetchJobs = actionCreator.async<{}, JobsState, {}>("FETCH_JOBS");
+const likeJob = actionCreator<number>("LIKE_JOB");
 
 const standardActionCreators = {
   fetchStart: fetchJobs.started,
   fetchFailed: fetchJobs.failed,
   fetchSuccess: fetchJobs.done,
+  likeJob,
 };
 
 const JOB_ROOT_URL = "http://api.indeed.com/ads/apisearch?";
